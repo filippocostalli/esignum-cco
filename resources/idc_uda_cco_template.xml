@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sincro:IdC xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.uni.com/U3011/sincro/ "
+    xmlns:sincro="http://www.uni.com/U3011/sincro/"
+    sincro:url="http://www.uni.com/U3011/sincro/"
+    sincro:version="1.0">
+	<sincro:SelfDescription>
+      <sincro:ID sincro:scheme="local">${selfDescription.id}</sincro:ID>
+      <sincro:CreatingApplication>
+          <sincro:Name>esignum</sincro:Name>
+          <sincro:Version>2.0.0</sincro:Version>
+          <sincro:Producer>Marno S.r.l.</sincro:Producer>
+      </sincro:CreatingApplication>
+  </sincro:SelfDescription>
+  <sincro:VdC>
+        <sincro:ID>{{metadata.cartella_scatola}}_{{sesscamp_id}}</sincro:ID>
+        <sincro:VdCGroup>
+            <sincro:Label>UNITA' DI ARCHIVIAZIONE CARTELLE CLINICHE</sincro:Label>
+            <sincro:Description>Contenitore virtuale cartelle cliniche</sincro:Description>
+        </sincro:VdCGroup>
+        <sincro:MoreInfo sincro:XMLScheme="file://MarnoCartelleCliniche.xsd">
+            <sincro:EmbeddedMetadata>
+                <UnitaDiArchiviazioneCartelleCliniche
+                codiceContenitore="{{metadata.cartella_scatola}}" indiceCampionamento="{{sesscamp_id}}"
+                aziendaCodiceIpa="{{metadata.asl_ipa}}" aziendaDescrizione="{{metadata.asl_descrizione}}"
+                />
+            </sincro:EmbeddedMetadata>
+        </sincro:MoreInfo>
+  </sincro:VdC>
+	<sincro:FileGroup>{% for idc-cartella in idc-cartelle %}
+        <sincro:File sincro:format="{{idc-cartella.mime-type}}">
+            <sincro:ID>{{idc-cartella.mime-type}}</sincro:ID>
+            <sincro:Path>{{idc-cartella.file-name}}</sincro:Path>
+            <sincro:Hash sincro:function="{{idc-cartella.hash-alg}}">{{idc-cartella.hash}}</sincro:Hash>
+        </sincro:File>{% endfor %}
+  </sincro:FileGroup>
+  <sincro:Process>
+      <sincro:Agent sincro:type="person" sincro:role="PublicOfficer">
+          <sincro:AgentName>
+              <sincro:NameAndSurname>
+                  <sincro:FirstName>MONICA</sincro:FirstName>
+                  <sincro:LastName>BRANCHETTI</sincro:LastName>
+              </sincro:NameAndSurname>
+          </sincro:AgentName>
+          <sincro:Agent_ID sincro:scheme="TaxCode">IT:BRNMNC73R56E625X</sincro:Agent_ID>
+      </sincro:Agent>
+      <sincro:TimeReference>
+          <sincro:TimeInfo>${.now?string["yyyy-MM-dd'T'HH:mm:ss"]}+01:00</sincro:TimeInfo>
+      </sincro:TimeReference>
+  </sincro:Process>
+</sincro:IdC>

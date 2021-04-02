@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PIndex xmlns="http://www.uni.com/U3011/sincro-v2/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.uni.com/U3011/sincro-v2 PIndex.xsd"
+ xmlns:sincro="http://www.uni.com/U3011/sincro-v2/" sincro:language="en-US"
+ sincro:uri="http://www.uni.com/U3011/sincro-v2/PIndex.xsd" sincro:sincroVersion="2.0">
+    <SelfDescription>
+        <ID sincro:scheme="scheme1">XXXXX</ID>
+        <CreatingApplication>
+            <Name>esignum</Name>
+            <Version>2.0.0</Version>
+            <Producer>Marno S.r.l.</Producer>
+        </CreatingApplication>
+    </SelfDescription>
+    <PVolume>
+        <ID sincro:scheme="recepta.regis">{{cartella-barcode}}</ID>
+        <Label>CARTELLA CLINICA</Label>
+        <Description>Indice cartella clinica ospedaliera</Description>
+        <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
+          <EmbeddedMetadata>
+            <CartellaClinica
+              id="{{cartella-id}}" barcode="{{cartella-barcode}}" codiceSdo="{{cartella-sdo-codice}}" anno="{{cartella-sdo-anno}}" dataRicovero="{{cartella-dataricovero|date:yyyy-MM-dd}}T00:00:00+01:00"
+              presidio="{{cartella-presidio-descrizione}}" reparto="{{cartella-reparto-descrizione}}" assistitoCognome="{{cartella-cognome}}" assistitnoNome="{{cartella-nome}}" assistitoCodiceFiscale="{{cartella-codicefiscale}}" />
+          </EmbeddedMetadata>>
+        </MoreInfo>
+    </PVolume>
+    <FileGroup>
+        <ID sincro:scheme="recepta.regis">{{cartella-id}}</ID>
+        <Description>Lista dei documenti che compongono la CCO digitalizzata</Description>
+        <File sincro:encoding="binary" sincro:format="{{documento.unisincro.mime-type}}">
+            <ID sincro:scheme="recepta.regis">{{documento.doc-id}}</ID>
+            <Path>file://{{documento.unisincro.file-name}}</Path>
+            <Hash sincro:hashFunction="{{documento.unisincro.hash-alg}}">{{documento.unisincro.hash}}</Hash>
+            <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
+                <EmbeddedMetadata>
+                  <Documento numeroPagina="{{documento.doc-npagina}}" fronteRetro="{{documento.doc-fronteretro}}" gruppo="{{documento.doc-gruppo}}"
+  	              classificazioneId="{{documento.doc-classificazione}}" classificazioneDescrizione="{{documento.doc-classificazione_desc}}" dataCreazione="{{documento.doc-datacreazione|date:yyyy-MM-dd}}T00:00:00+01:00" />
+                </EmbeddedMetadata>
+            </MoreInfo>
+        </File>
+    </FileGroup>
+    <Process>
+        <Submitter sincro:agentType="legal person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">VATIT-01111630495</AgentID>
+            <AgentName>
+                <FormalName>Marno S.r.l.</FormalName>
+            </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
+        </Submitter>
+        <Holder sincro:holderRole="soggetto produttore" sincro:agentType="legal person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">VATIT-{{cartella_presidio_piva}}</AgentID>
+            <AgentName>
+                <FormalName>{{cartella_presidio_descrizione}}</FormalName>
+            </AgentName>
+        </Holder>
+        <AuthorizedSigner sincro:signerRole="PreservationManager" sincro:agentType="natural person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-VLPNRC76R28G702X</AgentID>
+            <AgentName>
+                <NameAndSurname>
+                    <FirstName>Enrico</FirstName>
+                    <LastName>Volpato</LastName>
+                </NameAndSurname>
+            </AgentName>
+        </AuthorizedSigner>
+        <AuthorizedSigner sincro:signerRole="XXXXX" sincro:agentType="natural person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-NREBRNMNC73R56E625X</AgentID>
+            <AgentName>
+                <NameAndSurname>
+                    <FirstName>Monica</FirstName>
+                    <LastName>Branchetti</LastName>
+                </NameAndSurname>
+            </AgentName>
+        </AuthorizedSigner>
+        <!-- -->
+        <TimeReference>
+          <TimeInfo sincro:attachedTimeStamp="false">{{data-creazione}}</TimeInfo>
+        </TimeReference>
+        <LawsAndRegulations>UNI 11386:2020</LawsAndRegulations>
+    </Process>
+</PIndex>

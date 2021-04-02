@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sincro:IdC xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.uni.com/U3011/sincro/ "
+    xmlns:sincro="http://www.uni.com/U3011/sincro/"
+    sincro:url="http://www.uni.com/U3011/sincro/"
+    sincro:version="1.0">
+	<sincro:SelfDescription>
+      <sincro:ID sincro:scheme="local">${selfDescription.id}</sincro:ID>
+      <sincro:CreatingApplication>
+          <sincro:Name>esignum</sincro:Name>
+          <sincro:Version>2.0.0</sincro:Version>
+          <sincro:Producer>Marno S.r.l.</sincro:Producer>
+      </sincro:CreatingApplication>
+  </sincro:SelfDescription>
+  <sincro:VdC>
+        <sincro:ID>{{cartella-barcode}}-{{cartella-id}}</sincro:ID>
+        <sincro:VdCGroup>
+            <sincro:Label>CARTELLA CLINICA</sincro:Label>
+            <sincro:Description>Indice cartella clinica ospedaliera</sincro:Description>
+        </sincro:VdCGroup>
+        <sincro:MoreInfo sincro:XMLScheme="https://www.esignum.it/schemas/cartellecliniche.xsd">
+	          <sincro:EmbeddedMetadata>
+              <CartellaClinica
+                barcode="{{cartella-barcode}}" codiceSdo="{{cartella-sdo-codice}}" anno="{{cartella-sdo-anno}}" dataRicovero="{{cartella-dataricovero}}"
+                presidio="{{cartella-presidio-descrizione}}" reparto="{{cartella-reparto-descrizione}}" assistitoCognome="{{cartella-cognome}}" assistitnoNome="{{cartella-nome}}" assistitoCodiceFiscale="{{cartella-codicefiscale}}" />
+	          </sincro:EmbeddedMetadata>
+        </sincro:MoreInfo>
+  </sincro:VdC>
+	<sincro:FileGroup>{% for documento in documenti %}
+      <sincro:File sincro:format="{{documento.unisincro.mime-type}}">
+	        <sincro:ID>{{documento.doc-id}}</sincro:ID>
+	        <sincro:Path>file://{{documento.unisincro.file-name}}</sincro:Path>
+	        <sincro:Hash sincro:function="{{documento.unisincro.hash-alg}}">{{documento.unisincro.hash}}</sincro:Hash>
+	        <sincro:MoreInfo sincro:XMLScheme="https://www.esignum.it/schemas/cartellecliniche.xsd">
+	          <sincro:EmbeddedMetadata>
+	              <Documento numeroPagina="{{documento.doc-npagina}}" fronteRetro="{{documento.doc-fronteretro}}" gruppo="{{documento.doc-gruppo}}"
+	              classificazioneId="{{documento.doc-classificazione}}" classificazioneDescrizione="{{documento.doc-classificazione-desc}}" dataCreazione="{{documento.doc-datacreazione|date:yyyy-MM-dd}}" />
+	          </sincro:EmbeddedMetadata>
+          </sincro:MoreInfo>
+        </sincro:File>{% endfor %}
+	</sincro:FileGroup>
+	<sincro:Process>
+  		 <sincro:Agent xmlns:sincro="http://www.uni.com/U3011/sincro/" sincro:type="person" sincro:role="Operator">
+  	     <sincro:AgentName>
+           <sincroFormalName>OPERATORE_SCANSIONE</sincro:FormalName>
+          </sincro:AgentName>
+          <sincro:Agent_ID sincro:scheme="OtherScheme">{{cartella-op-scansione-id}}</sincro:Agent_ID>
+  	      <sincro:MoreInfo sincro:XMLScheme="https://www.esignum.it/schemas/cartellecliniche.xsd">
+  			    <sincro:EmbeddedMetadata>
+  				    <OperazioneCartelleCliniche operazione="SCANSIONE" data="{{cartella-datascansione}}"/>
+  					</sincro:EmbeddedMetadata>
+  				</sincro:MoreInfo>
+  	    </sincro:Agent>
+  	    <sincro:Agent xmlns:sincro="http://www.uni.com/U3011/sincro/" sincro:type="person" sincro:role="Operator">
+  	     <sincro:AgentName>
+           <sincroFormalName>OPERATORE_TIPIZZAZIONE</sincro:FormalName>
+          </sincro:AgentName>
+          <sincro:Agent_ID sincro:scheme="OtherScheme">{{cartella-op-tipizzazione-id}}</sincro:Agent_ID>
+  	      <sincro:MoreInfo sincro:XMLScheme="https://www.esignum.it/schemas/cartellecliniche.xsd">
+  			    <sincro:EmbeddedMetadata>
+  				    <OperazioneCartelleCliniche operazione="TIPIZZAZIONE" data="{{cartella-datatipizzazione}}"/>
+  					</sincro:EmbeddedMetadata>
+  				</sincro:MoreInfo>
+  	    </sincro:Agent>
+      <sincro:TimeReference>
+          <sincro:TimeInfo>{{data-creazione}}</sincro:TimeInfo>
+      </sincro:TimeReference>
+    </sincro:Process>
+</sincro:IdC>

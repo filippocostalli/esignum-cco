@@ -1,0 +1,13 @@
+{:db-regis-spec {:dbtype "postgres"
+                 :host "10.10.117.5"
+                 ;;:host "localhost"
+                 :dbname "recepta_regis"
+                 :user "postgres"
+                 :password "marno"
+                 :sslfactory "org.postgresql.ssl.NonValidatingFactory"}
+
+  :cco-idc-template "idc_cco_template.xml"
+  :uda-idc-template "idc_uda_cco_template.xml"
+
+  :pindex-root-lin "/homo/osboxes/recepta/conservazione_cco"
+  :pindex-root-win "E:/campionamento/idc_root"}
