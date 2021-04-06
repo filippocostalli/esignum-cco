@@ -69,6 +69,8 @@
       (spit file-dest-name idc-string)
       (filename->unisincro file-dest-name)))
 
+(defn)
+
 (defn scatola->idc [campionamento-data]
   "Salva tutti gli idc della cartella e ritorna la lista dei dati per costruire unisincro dell'indice finale, che ritorna"
   (let [dest-dir (get-destination-dir (:sesscamp-id campionamento-data))]
