@@ -15,3 +15,5 @@
 
 (def template-idc-cco (:cco-idc-template configuration))
 (def template-idc-uda (:uda-idc-template configuration))
+
+(def pindex-xsd-validator (:pindex-xsd-validator configuration))
