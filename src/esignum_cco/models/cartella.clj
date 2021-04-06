@@ -9,7 +9,7 @@
 (def query-cartella "SELECT
   cartella_id, cartella_barcode, cartella_datascansione, cartella_datatipizzazione,
   cartella_sdo_codice, cartella_sdo_anno, cartella_dataricovero,
-  cartella_presidio_descrizione, cartella_reparto_descrizione,
+  cartella_presidio_codice, cartella_presidio_descrizione, cartella_reparto_descrizione,
   cartella_codicefiscale, cartella_cognome, cartella_nome,
   cartella_op_tipizzazione_id, cartella_op_scansione_id
   FROM cartella WHERE cartella_id = ?")
