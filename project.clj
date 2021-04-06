@@ -18,4 +18,4 @@
                  [clj-xml-validation "1.0.2"]]
   :main ^:skip-aot esignum-cco.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}) 
