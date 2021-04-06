@@ -18,7 +18,7 @@
         year  (time/value (time/property now :year))
         month (time/value (time/property now :month-of-year))
         uuid  (.toString (java.util.UUID/randomUUID))
-        dest-dir (str root "/" year "/" month "/" campionamento-id "/" uuid)]
+        dest-dir (str root "/" year "/" month "/" campionamento-id "_" uuid)]
     (io/make-parents (str dest-dir "/."))
     dest-dir))
 
@@ -56,20 +56,17 @@
     (-> {:datasource config/db-regis :cartella-id cartella-id}
         (cartella/select-by-id)
         (assoc :documenti (get-documenti-unisincro cartella-id))
-        (assoc :data-creazione (time/format "yyyy-MM-dd'T'HH:mm:ss:SSSXXXXX" (time/zoned-date-time)))))
+        (assoc :data-creazione (time/format "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX" (time/zoned-date-time)))))
 
-;; TODO: DECIDERE LA ROOT DOVE SALVARE
 (defn cartella->idc
   "Prende un id cartella, crea e salva l'indice e neritorna i dati unisincro (hash etc)"
   [dest-dir cartella-id]
   (let [dati-cartella (cartella->unisincro-data cartella-id)
         idc-string   (parser/render-file config/template-idc-cco dati-cartella)
-        file-dest-name (str dest-dir "/PindexCCO" cartella-id ".xml")]
+        file-dest-name (str dest-dir "/PIndexCCO" cartella-id ".xml")]
       (println (str "Faccio " cartella-id))
       (spit file-dest-name idc-string)
       (filename->unisincro file-dest-name)))
-
-(defn)
 
 (defn scatola->idc [campionamento-data]
   "Salva tutti gli idc della cartella e ritorna la lista dei dati per costruire unisincro dell'indice finale, che ritorna"
