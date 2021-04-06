@@ -2,10 +2,10 @@
 <PIndex xmlns="http://www.uni.com/U3011/sincro-v2/"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.uni.com/U3011/sincro-v2 PIndex.xsd"
- xmlns:sincro="http://www.uni.com/U3011/sincro-v2/" sincro:language="en-US"
+ xmlns:sincro="http://www.uni.com/U3011/sincro-v2/" sincro:language="it"
  sincro:uri="http://www.uni.com/U3011/sincro-v2/PIndex.xsd" sincro:sincroVersion="2.0">
     <SelfDescription>
-        <ID sincro:scheme="scheme1">XXXXX</ID>
+        <ID sincro:scheme="local">CCO-{{cartella-id}}-{{data-creazione}}</ID>
         <CreatingApplication>
             <Name>esignum</Name>
             <Version>2.0.0</Version>
@@ -19,14 +19,14 @@
         <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
           <EmbeddedMetadata>
             <CartellaClinica
-              id="{{cartella-id}}" barcode="{{cartella-barcode}}" codiceSdo="{{cartella-sdo-codice}}" anno="{{cartella-sdo-anno}}" dataRicovero="{{cartella-dataricovero|date:yyyy-MM-dd}}T00:00:00+01:00"
+              id="{{cartella-id}}" barcode="{{cartella-barcode}}" codiceSdo="{{cartella-sdo-codice}}" anno="{{cartella-sdo-anno}}" dataRicovero="{{cartella-dataricovero|date:yyyy-MM-dd:SSSXXXXX}}"
               presidio="{{cartella-presidio-descrizione}}" reparto="{{cartella-reparto-descrizione}}" assistitoCognome="{{cartella-cognome}}" assistitnoNome="{{cartella-nome}}" assistitoCodiceFiscale="{{cartella-codicefiscale}}" />
-          </EmbeddedMetadata>>
+          </EmbeddedMetadata>
         </MoreInfo>
     </PVolume>
     <FileGroup>
         <ID sincro:scheme="recepta.regis">{{cartella-id}}</ID>
-        <Description>Lista dei documenti che compongono la CCO digitalizzata</Description>
+        <Description>Lista dei documenti che compongono la CCO digitalizzata</Description>{% for documento in documenti %}
         <File sincro:encoding="binary" sincro:format="{{documento.unisincro.mime-type}}">
             <ID sincro:scheme="recepta.regis">{{documento.doc-id}}</ID>
             <Path>file://{{documento.unisincro.file-name}}</Path>
@@ -34,10 +34,10 @@
             <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
                 <EmbeddedMetadata>
                   <Documento numeroPagina="{{documento.doc-npagina}}" fronteRetro="{{documento.doc-fronteretro}}" gruppo="{{documento.doc-gruppo}}"
-  	              classificazioneId="{{documento.doc-classificazione}}" classificazioneDescrizione="{{documento.doc-classificazione_desc}}" dataCreazione="{{documento.doc-datacreazione|date:yyyy-MM-dd}}T00:00:00+01:00" />
+  	              classificazioneId="{{documento.doc-classificazione}}" classificazioneDescrizione="{{documento.doc-classificazione-desc}}" dataCreazione="{{documento.doc-datacreazione|date:yyyy-MM-dd}}" />
                 </EmbeddedMetadata>
             </MoreInfo>
-        </File>
+        </File>{% endfor %}
     </FileGroup>
     <Process>
         <Submitter sincro:agentType="legal person">
@@ -48,10 +48,11 @@
             <RelevantDocument>Manuale della conservazione</RelevantDocument>
         </Submitter>
         <Holder sincro:holderRole="soggetto produttore" sincro:agentType="legal person">
-            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">VATIT-{{cartella_presidio_piva}}</AgentID>
+            <AgentID sincro:nameRegistrationAuthority="Ministero della Salute">MS:IT-{{cartella-presidio-codice}}</AgentID>
             <AgentName>
-                <FormalName>{{cartella_presidio_descrizione}}</FormalName>
+                <FormalName>{{cartella-presidio-descrizione}}</FormalName>
             </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
         </Holder>
         <AuthorizedSigner sincro:signerRole="PreservationManager" sincro:agentType="natural person">
             <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-VLPNRC76R28G702X</AgentID>
@@ -61,20 +62,29 @@
                     <LastName>Volpato</LastName>
                 </NameAndSurname>
             </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
         </AuthorizedSigner>
-        <AuthorizedSigner sincro:signerRole="XXXXX" sincro:agentType="natural person">
+        <AuthorizedSigner sincro:signerRole="Delegate" sincro:agentType="natural person">
             <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-NREBRNMNC73R56E625X</AgentID>
             <AgentName>
                 <NameAndSurname>
                     <FirstName>Monica</FirstName>
                     <LastName>Branchetti</LastName>
                 </NameAndSurname>
+                <RelevantDocument>Manuale della conservazione</RelevantDocument>
             </AgentName>
         </AuthorizedSigner>
-        <!-- -->
         <TimeReference>
           <TimeInfo sincro:attachedTimeStamp="false">{{data-creazione}}</TimeInfo>
         </TimeReference>
         <LawsAndRegulations>UNI 11386:2020</LawsAndRegulations>
+        <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
+          <EmbeddedMetadata>
+            <OperatoriCartella>
+              <Operatore operazione="SCANSIONE" cognome="{{operatore-scansione.operatore-cognome}}" nome="{{operatore-scansione.operatore-nome}}" codiceFiscale="{{operatore-scansione.operatore-codfiscale}}" data="{{cartella-datascansione|date:yyyy-MM-dd}}" />
+              <Operatore operazione="TIPIZZAZIONE" cognome="{{operatore-tipizzazione.operatore-cognome}}" nome="{{operatore-tipizzazione.operatore-nome}}" codiceFiscale="{{operatore-tipizzazione.operatore-codfiscale}}" data="{{cartella-datatipizzazione|date:yyyy-MM-dd}}" />
+            </OperatoriCartella>
+          </EmbeddedMetadata>
+      </MoreInfo>
     </Process>
 </PIndex>
