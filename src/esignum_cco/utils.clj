@@ -1,7 +1,8 @@
 (ns esignum-cco.utils
   (:require
    [cambium.core :as log]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [java-time :as time]))
 
 
 (def not-nil? (complement nil?))
@@ -68,7 +69,7 @@
    (-> (get-os)
        (str/includes? "mac")))
 
-
+;; -- snak kebab
 (defn snake-case->kebab-case
     [column]
     (when (keyword? column)
@@ -81,3 +82,15 @@
                (assoc m (snake-case->kebab-case k) v))
              {}
              output))
+
+;; Date
+
+(defn sql-date->xsd-datetime
+   [d]
+   (let [local-d (time/local-date d)
+         year    (time/value (time/property local-d :year))
+         month   (time/value (time/property local-d :month-of-year))
+         day     (time/value (time/property local-d :day-of-month))]
+     (->>
+        (time/zoned-date-time year month day)
+        (time/format "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"))))
