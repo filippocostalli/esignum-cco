@@ -15,7 +15,8 @@
                  [com.novemberain/pantomime "2.11.0"]
                  [selmer "1.12.24"]
                  [clojure.java-time "0.3.2"]
-                 [clj-xml-validation "1.0.2"]]
+                 [clj-xml-validation "1.0.2"]
+                 [clj-pdf "2.5.6"]]
   :main ^:skip-aot esignum-cco.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}) 
+  :profiles {:uberjar {:aot :all}})
