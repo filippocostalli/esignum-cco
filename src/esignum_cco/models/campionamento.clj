@@ -11,8 +11,12 @@
 (def not-nil? (complement nil?))
 
 (def query-campionamento
-  "SELECT sesscamp_id, sesscamp_scatola_codice, sesscamp_rapporto_path
-   FROM sessione_campionamento WHERE sesscamp_esito = 1 ORDER BY sesscamp_id LIMIT 1")
+  "SELECT sesscamp_id, sesscamp_scatola_codice, sesscamp_rapporto_path, sesscamp_inizio,
+   utente_cognome, utente_nome, utente_codfiscale
+   FROM sessione_campionamento, UTENTE
+   WHERE sesscamp_esito = 1
+   AND sesscamp_utente_id = utente_id
+   ORDER BY sesscamp_id LIMIT 1")
 
 (def query-metadata
   "SELECT cartella_scatola, asl_codice, asl_ipa, asl_descrizione FROM cartella, asl
