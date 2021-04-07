@@ -10,7 +10,8 @@
 
 (defn insert! [datasource campionamento-map]
   (let [{:keys [sesscamp-id sesscamp-scatola-codice]} campionamento-map]
-    (jdbc/insert! datasource :versamento {:versamento_campionamento_id sesscamp-id
-                                          :versamento_scatola_codice sesscamp-scatola-codice
-                                          :versamento_stato in-corso
-                                          :versamento_inizio (time/local-date)})))
+    (first (jdbc/insert! datasource :versamento {:versamento_campionamento_id sesscamp-id
+                                                        :versamento_scatola_codice sesscamp-scatola-codice
+                                                        :versamento_stato in-corso
+                                                        :versamento_inizio (time/local-date)}
+                    {:row-fn #(utils/format-output-keywords %)}))))

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PIndex xmlns="http://www.uni.com/U3011/sincro-v2/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.uni.com/U3011/sincro-v2 PIndex.xsd"
+ xmlns:sincro="http://www.uni.com/U3011/sincro-v2/" sincro:language="it"
+ sincro:uri="http://www.uni.com/U3011/sincro-v2/PIndex.xsd" sincro:sincroVersion="2.0">
+    <SelfDescription>
+        <ID sincro:scheme="recepta-regis">XXXXXXX</ID>
+        <CreatingApplication>
+            <Name>esignum</Name>
+            <Version>2.0.0</Version>
+            <Producer>Marno S.r.l.</Producer>
+        </CreatingApplication>
+    </SelfDescription>
+    <PVolume>
+        <ID sincro:scheme="recepta.regis">{{metadata.cartella_scatola}}_{{sesscamp_id}}</ID>
+        <Label>UNITA' DI ARCHIVIAZIONE CARTELLE CLINICHE</Label>
+        <Description>Contenitore virtuale cartelle cliniche</Description>
+        <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
+          <EmbeddedMetadata>
+            <UnitaDiArchiviazioneCartelleCliniche
+            codiceContenitore="{{metadata.cartella-scatola}}" indiceCampionamento="{{sesscamp-id}}"
+            aziendaCodiceIpa="{{metadata.asl-ipa}}" aziendaDescrizione="{{metadata.asl-descrizione}}"
+            />
+          </EmbeddedMetadata>
+        </MoreInfo>
+    </PVolume>
+    <FileGroup>
+        <ID sincro:scheme="recepta.regis">XXXXX</ID>
+        <Description>Lista degli indici delle varie cartelle inserite nel contenitore</Description>{% for idc-cartella in idc-cartelle %}
+        <File sincro:encoding="binary" sincro:format="{{idc-cartella.mime-type}}">
+            <ID sincro:scheme="recepta.regis">{{documento.doc-id}}</ID>
+            <Path>file://{{idc-cartella.file-name}}</Path>
+            <Hash sincro:hashFunction="{{idc-cartella.hash-alg}}">{{idc-cartella.hash}}</Hash>
+        </File>{% endfor %}
+    </FileGroup>
+    <Process>
+        <Submitter sincro:agentType="legal person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">VATIT-01111630495</AgentID>
+            <AgentName>
+                <FormalName>Marno S.r.l.</FormalName>
+            </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
+        </Submitter>
+        <Holder sincro:holderRole="soggetto produttore" sincro:agentType="legal person">
+            <AgentID sincro:nameRegistrationAuthority="Ministero della Salute">MS:IT-{{cartella-presidio-codice}}</AgentID>
+            <AgentName>
+                <FormalName>{{cartella-presidio-descrizione}}</FormalName>
+            </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
+        </Holder>
+        <AuthorizedSigner sincro:signerRole="PreservationManager" sincro:agentType="natural person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-VLPNRC76R28G702X</AgentID>
+            <AgentName>
+                <NameAndSurname>
+                    <FirstName>Enrico</FirstName>
+                    <LastName>Volpato</LastName>
+                </NameAndSurname>
+            </AgentName>
+            <RelevantDocument>Manuale della conservazione</RelevantDocument>
+        </AuthorizedSigner>
+        <AuthorizedSigner sincro:signerRole="Delegate" sincro:agentType="natural person">
+            <AgentID sincro:nameRegistrationAuthority="Agenzia delle Entrate">TINIT-NREBRNMNC73R56E625X</AgentID>
+            <AgentName>
+                <NameAndSurname>
+                    <FirstName>Monica</FirstName>
+                    <LastName>Branchetti</LastName>
+                </NameAndSurname>
+                <RelevantDocument>Manuale della conservazione</RelevantDocument>
+            </AgentName>
+        </AuthorizedSigner>
+        <TimeReference>
+          <TimeInfo sincro:attachedTimeStamp="false">{{data-creazione}}</TimeInfo>
+        </TimeReference>
+        <LawsAndRegulations>UNI 11386:2020</LawsAndRegulations>
+        <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
+          <EmbeddedMetadata>
+            <Operatori>
+              <Operatore operazione="CAMPIONAMENTO" cognome="{{utente-cognome}}" nome="{{utente-nome}}" codiceFiscale="{{utente-codfiscale}}" data="{{sesscamp-inizio|date:yyyy-MM-dd}}" />
+            </Operatori>
+          </EmbeddedMetadata>
+      </MoreInfo>
+    </Process>
+</PIndex>
