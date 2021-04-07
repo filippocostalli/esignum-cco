@@ -8,6 +8,8 @@
 
 (def db-regis (:db-regis-spec configuration))
 
+(def db-esignum (:db-esignum-spec configuration))
+
 (def pindex-file-root
     (if (myutils/is-linux?)
       (:pindex-root-lin configuration)
