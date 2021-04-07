@@ -21,11 +21,10 @@
       (log/info (str "---- >" dest-dir))
       dest-dir))
 
-
+ 
 (defn conservazione-campionamento! []
   (if-let [campionamento (campionamento/get-first config/db-regis)]
      (let [versamento (versamento/insert! config/db-esignum campionamento)
-           _ (println versamento)
            dest-dir (get-dest-dir (:sesscamp-id campionamento) (:versamento-id versamento))
            campionamento-data (assoc campionamento :versamento versamento
                                                    :destination-dir dest-dir)]
