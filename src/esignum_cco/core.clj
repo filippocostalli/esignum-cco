@@ -2,11 +2,7 @@
   (:gen-class)
   (:require
     [cambium.core :as log]
-    [overtone.at-at :as scheduler]
-    esignum-cco.models.campionamento :as campionamento))
-
-
-(def db-regis (:db-regis-spec config/configuration))
+    [overtone.at-at :as scheduler]))
 
 (def my-pool (scheduler/mk-pool))
 
