@@ -12,7 +12,7 @@
   cartella_presidio_codice, cartella_presidio_descrizione, cartella_reparto_descrizione,
   cartella_codicefiscale, cartella_cognome, cartella_nome,
   cartella_op_tipizzazione_id, cartella_op_scansione_id
-  FROM cartella WHERE cartella_id = ?")
+  FROM cartella WHERE cartella_id = ? ")
 
 (defn select-by-id [m]
   (jdbc/with-db-connection [db-con (:datasource m)]
@@ -27,5 +27,5 @@
 
 (defn select-by-scatola
   [datasource id]
-  (jdbc/query datasource ["SELECT cartella_id FROM cartella WHERE cartella_scatola = ? ORDER BY cartella_id" id]
+  (jdbc/query datasource ["SELECT cartella_id FROM cartella WHERE cartella_scatola = ? ORDER BY cartella_id LIMIT 5" id]
     {:row-fn #(utils/format-output-keywords %)}))
