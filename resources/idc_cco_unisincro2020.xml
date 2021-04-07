@@ -80,10 +80,10 @@
         <LawsAndRegulations>UNI 11386:2020</LawsAndRegulations>
         <MoreInfo sincro:xmlSchema="https://www.esignum.it/schemas/cartellecliniche.xsd">
           <EmbeddedMetadata>
-            <OperatoriCartella>
+            <Operatori>
               <Operatore operazione="SCANSIONE" cognome="{{operatore-scansione.operatore-cognome}}" nome="{{operatore-scansione.operatore-nome}}" codiceFiscale="{{operatore-scansione.operatore-codfiscale}}" data="{{cartella-datascansione|date:yyyy-MM-dd}}" />
               <Operatore operazione="TIPIZZAZIONE" cognome="{{operatore-tipizzazione.operatore-cognome}}" nome="{{operatore-tipizzazione.operatore-nome}}" codiceFiscale="{{operatore-tipizzazione.operatore-codfiscale}}" data="{{cartella-datatipizzazione|date:yyyy-MM-dd}}" />
-            </OperatoriCartella>
+            </Operatori>
           </EmbeddedMetadata>
       </MoreInfo>
     </Process>

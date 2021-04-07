@@ -16,7 +16,7 @@
 
   ;;cco-idc-template "idc_cco_template.xml"
   :cco-idc-template "idc_cco_unisincro2020.xml"
-  :uda-idc-template "idc_uda_cco_template.xml"
+  :uda-idc-template "idc_uda_unisincro2020.xml"
 
   :pindes-xsd-validator "Pindex.xsd"
 
