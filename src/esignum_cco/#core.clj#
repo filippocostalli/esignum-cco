@@ -12,3 +12,4 @@
 (defn -main
   [& args]
   (scheduler/interspaced 10000 conservazione my-pool))
+  
